@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_date"
         app:layout_constraintTop_toBottomOf="@+id/text_date"
-        tools:text="@string/title" />
+        tools:text="@string/movie_name" />
 
     <TextView
         android:id="@+id/text_date"
@@ -40,7 +40,7 @@
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_poster"
-        tools:text="@string/dateline" />
+        tools:text="@string/movie_date" />
 
     <Button
         android:id="@+id/btn_start"
@@ -48,7 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_button"
-        android:text="@string/start_learn"
+        android:drawableLeft="@drawable/ic_play_white"
+        android:text="@string/action_play"
         android:textColor="@android:color/white"
         android:textSize="12sp"
         android:textAllCaps="false"
@@ -60,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/description_course"
+        android:text="@string/movie_overview"
         android:textColor="@color/teal_700"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -79,43 +80,5 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_desc"
-        tools:text="@string/description" />
-
-    <TextView
-        android:id="@+id/text_list_module"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/list_module"
-        android:textColor="@color/teal_700"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_description" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_module"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_list_module"
-        tools:listitem="@layout/items_module_list" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rv_module"
-        app:layout_constraintEnd_toEndOf="@+id/rv_module"
-        app:layout_constraintStart_toStartOf="@+id/rv_module"
-        app:layout_constraintTop_toTopOf="@+id/rv_module"
-        tools:visibility="visible" />
+        tools:text="@string/movie_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>
