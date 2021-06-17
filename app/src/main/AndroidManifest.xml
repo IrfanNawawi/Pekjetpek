@@ -15,7 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="com.mockdroid.pekjetpek.ui.detail.DetailMovieActivity"
-            android:label="@string/title_activity_detail_course"
+            android:label="@string/title_activity_detail_movie"
             android:parentActivityName="com.mockdroid.pekjetpek.ui.home.HomeActivity"
             android:theme="@style/Theme.Academy.NoActionBar">
             <meta-data
