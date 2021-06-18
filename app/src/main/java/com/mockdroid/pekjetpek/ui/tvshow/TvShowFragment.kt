@@ -5,15 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.mockdroid.pekjetpek.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.mockdroid.pekjetpek.databinding.FragmentTvShowBinding
+import com.mockdroid.pekjetpek.utils.DataDummy
 
 class TvShowFragment : Fragment() {
+
+    private lateinit var fragmentTvShowBinding: FragmentTvShowBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv_show, container, false)
+        fragmentTvShowBinding = FragmentTvShowBinding.inflate(layoutInflater, container, false)
+        return fragmentTvShowBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (activity != null) {
+            val tvShow = DataDummy.generateDummyTvShow()
+            val tvShowAdapter = TvShowAdapter()
+            tvShowAdapter.setTvShow(tvShow)
+
+            with(fragmentTvShowBinding.rvTvshow) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = tvShowAdapter
+            }
+        }
     }
 }

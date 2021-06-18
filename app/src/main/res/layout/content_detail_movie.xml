@@ -50,9 +50,9 @@
         android:background="@drawable/bg_button"
         android:drawableLeft="@drawable/ic_play_white"
         android:text="@string/action_play"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="12sp"
-        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="@+id/text_title"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
