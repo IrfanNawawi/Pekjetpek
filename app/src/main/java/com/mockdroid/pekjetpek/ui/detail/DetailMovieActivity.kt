@@ -2,6 +2,7 @@ package com.mockdroid.pekjetpek.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -27,23 +28,17 @@ class DetailMovieActivity : AppCompatActivity() {
         setSupportActionBar(activityDetailMovieBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailMovieViewModel::class.java]
         val extras = intent.extras
         if (extras != null) {
             val movieId = extras.getString(Const.EXTRA_MOVIE)
             val type = extras.getString(Const.EXTRA_TYPE)
             if (movieId != null) {
+                viewModel.setSelectedMovie(movieId)
                 if (type == Const.TYPE_MOVIE) {
-                    for (movie in DataDummy.generateDummyMovies()) {
-                        if (movie.id == movieId) {
-                            detailMovie(movie)
-                        }
-                    }
+                    detailMovie(viewModel.getMovie())
                 } else {
-                    for (tvShow in DataDummy.generateDummyTvShow()) {
-                        if (tvShow.id == movieId) {
-                            detailMovie(tvShow)
-                        }
-                    }
+                    detailMovie(viewModel.getTvShow())
                 }
             }
         }

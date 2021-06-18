@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mockdroid.pekjetpek.databinding.FragmentTvShowBinding
 import com.mockdroid.pekjetpek.utils.DataDummy
@@ -24,7 +25,8 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val tvShow = DataDummy.generateDummyTvShow()
+            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
+            val tvShow = viewModel.getTvShow()
             val tvShowAdapter = TvShowAdapter()
             tvShowAdapter.setTvShow(tvShow)
 
