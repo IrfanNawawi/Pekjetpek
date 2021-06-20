@@ -11,7 +11,6 @@ import com.mockdroid.pekjetpek.data.MovieEntity
 import com.mockdroid.pekjetpek.databinding.ActivityDetailMovieBinding
 import com.mockdroid.pekjetpek.databinding.ContentDetailMovieBinding
 import com.mockdroid.pekjetpek.utils.Const
-import com.mockdroid.pekjetpek.utils.DataDummy
 
 class DetailMovieActivity : AppCompatActivity() {
 

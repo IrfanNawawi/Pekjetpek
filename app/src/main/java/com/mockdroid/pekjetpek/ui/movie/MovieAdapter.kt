@@ -12,7 +12,8 @@ import com.mockdroid.pekjetpek.databinding.ItemsMovieBinding
 import com.mockdroid.pekjetpek.ui.detail.DetailMovieActivity
 import com.mockdroid.pekjetpek.utils.Const
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private val callback: MovieFragmentCallback) :
+    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var listMovies = ArrayList<MovieEntity>()
 
     fun setMovies(movies: List<MovieEntity>?) {
@@ -37,7 +38,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun getItemCount(): Int = listMovies.size
 
-    class MovieViewHolder(private val binding: ItemsMovieBinding) :
+    inner class MovieViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity) {
             with(binding) {
@@ -49,6 +50,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                     intent.putExtra(Const.EXTRA_TYPE, movie.type)
                     itemView.context.startActivity(intent)
                 }
+                imgShare.setOnClickListener { callback.onShareClick(movie) }
                 Glide.with(itemView.context).load(movie.poster).apply(
                     RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error)

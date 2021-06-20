@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mockdroid.pekjetpek.R
+import com.mockdroid.pekjetpek.data.MovieEntity
 import com.mockdroid.pekjetpek.databinding.FragmentTvShowBinding
-import com.mockdroid.pekjetpek.utils.DataDummy
 
-class TvShowFragment : Fragment() {
+class TvShowFragment : Fragment(), TvShowFragmentCallback {
 
     private lateinit var fragmentTvShowBinding: FragmentTvShowBinding
 
@@ -27,7 +29,7 @@ class TvShowFragment : Fragment() {
         if (activity != null) {
             val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
             val tvShow = viewModel.getTvShow()
-            val tvShowAdapter = TvShowAdapter()
+            val tvShowAdapter = TvShowAdapter(this)
             tvShowAdapter.setTvShow(tvShow)
 
             with(fragmentTvShowBinding.rvTvshow) {
@@ -35,6 +37,16 @@ class TvShowFragment : Fragment() {
                 setHasFixedSize(true)
                 adapter = tvShowAdapter
             }
+        }
+    }
+
+    override fun onShareClick(tvShow: MovieEntity) {
+        if (activity != null) {
+            val mimeType = "text/plain"
+            ShareCompat.IntentBuilder.from(requireActivity()).setText(mimeType)
+                .setChooserTitle("Bagikan tv show ini sekarang.")
+                .setText(resources.getString(R.string.share_text, tvShow.title))
+                .startChooser()
         }
     }
 }

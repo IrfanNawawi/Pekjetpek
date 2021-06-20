@@ -12,7 +12,8 @@ import com.mockdroid.pekjetpek.databinding.ItemsMovieBinding
 import com.mockdroid.pekjetpek.ui.detail.DetailMovieActivity
 import com.mockdroid.pekjetpek.utils.Const
 
-class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
+class TvShowAdapter(private val callback: TvShowFragmentCallback) :
+    RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
     private var listTvShow = ArrayList<MovieEntity>()
 
     fun setTvShow(tvShow: List<MovieEntity>?) {
@@ -37,7 +38,7 @@ class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
     override fun getItemCount(): Int = listTvShow.size
 
-    class TvShowViewHolder(private val binding: ItemsMovieBinding) :
+    inner class TvShowViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(tvShow: MovieEntity) {
             with(binding) {
@@ -48,6 +49,7 @@ class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
                     intent.putExtra(Const.EXTRA_MOVIE, tvShow.id)
                     itemView.context.startActivity(intent)
                 }
+                imgShare.setOnClickListener { callback.onShareClick(tvShow) }
                 Glide.with(itemView.context).load(tvShow.poster).apply(
                     RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error)
                 ).into(imgPoster)
