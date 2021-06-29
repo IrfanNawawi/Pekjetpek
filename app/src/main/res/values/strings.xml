@@ -10,4 +10,5 @@
     <string name="movie_description">Set in the present, the series offers a bold, subversive take on Archie, Betty, Veronica and their friends, exploring the surreality of small-town life, the darkness and weirdness bubbling beneath Riverdales wholesome facade."</string>
     <string name="action_play">Play</string>
     <string name="share_text">Segera mainkan film %s di TMDB.com</string>
+    <string name="imageposter">ImagePoster</string>
 </resources>

@@ -1,25 +1,25 @@
 package com.mockdroid.pekjetpek.ui.tvshow
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.mockdroid.pekjetpek.BuildConfig
 import com.mockdroid.pekjetpek.R
-import com.mockdroid.pekjetpek.data.MovieEntity
+import com.mockdroid.pekjetpek.data.source.remote.response.TvShowItem
 import com.mockdroid.pekjetpek.databinding.ItemsMovieBinding
-import com.mockdroid.pekjetpek.ui.detail.DetailMovieActivity
 import com.mockdroid.pekjetpek.utils.Const
 
 class TvShowAdapter(private val callback: TvShowFragmentCallback) :
     RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
-    private var listTvShow = ArrayList<MovieEntity>()
+    private var listTvShow = ArrayList<TvShowItem>()
 
-    fun setTvShow(tvShow: List<MovieEntity>?) {
+    fun setTvShow(tvShow: List<TvShowItem>?) {
         if (tvShow == null) return
         this.listTvShow.clear()
         this.listTvShow.addAll(tvShow)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -40,19 +40,18 @@ class TvShowAdapter(private val callback: TvShowFragmentCallback) :
 
     inner class TvShowViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: MovieEntity) {
+        fun bind(tvShow: TvShowItem) {
             with(binding) {
-                tvItemTitle.text = tvShow.title
-                tvItemDate.text = tvShow.releaseDate
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailMovieActivity::class.java)
-                    intent.putExtra(Const.EXTRA_MOVIE, tvShow.id)
-                    itemView.context.startActivity(intent)
-                }
+                tvItemTitle.text = tvShow.name
+                tvItemDate.text = tvShow.firstAirDate
+                itemView.setOnClickListener { callback.onDetailClick(tvShow) }
                 imgShare.setOnClickListener { callback.onShareClick(tvShow) }
-                Glide.with(itemView.context).load(tvShow.poster).apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error)
-                ).into(imgPoster)
+                Glide.with(itemView.context)
+                    .load(BuildConfig.IMAGE_URL_TMDB + Const.POSTER_SIZE_W185 + tvShow.posterPath)
+                    .apply(
+                        RequestOptions.placeholderOf(R.drawable.ic_loading)
+                            .error(R.drawable.ic_error)
+                    ).into(imgPoster)
             }
         }
     }

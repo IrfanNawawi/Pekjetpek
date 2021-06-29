@@ -1,7 +1,8 @@
 package com.mockdroid.pekjetpek.ui.tvshow
 
-import com.mockdroid.pekjetpek.data.MovieEntity
+import com.mockdroid.pekjetpek.data.source.remote.response.TvShowItem
 
 interface TvShowFragmentCallback {
-    fun onShareClick(tvShow: MovieEntity)
+    fun onDetailClick(tvShow: TvShowItem)
+    fun onShareClick(tvShow: TvShowItem)
 }

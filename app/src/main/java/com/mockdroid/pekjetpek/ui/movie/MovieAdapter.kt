@@ -1,25 +1,26 @@
 package com.mockdroid.pekjetpek.ui.movie
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.mockdroid.pekjetpek.BuildConfig
 import com.mockdroid.pekjetpek.R
-import com.mockdroid.pekjetpek.data.MovieEntity
+import com.mockdroid.pekjetpek.data.source.remote.response.MovieItem
 import com.mockdroid.pekjetpek.databinding.ItemsMovieBinding
-import com.mockdroid.pekjetpek.ui.detail.DetailMovieActivity
-import com.mockdroid.pekjetpek.utils.Const
+import com.mockdroid.pekjetpek.utils.Const.Companion.POSTER_SIZE_W185
+
 
 class MovieAdapter(private val callback: MovieFragmentCallback) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private var listMovies = ArrayList<MovieEntity>()
+    private var listMovies = ArrayList<MovieItem>()
 
-    fun setMovies(movies: List<MovieEntity>?) {
+    fun setMovies(movies: List<MovieItem>?) {
         if (movies == null) return
         this.listMovies.clear()
         this.listMovies.addAll(movies)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -40,18 +41,14 @@ class MovieAdapter(private val callback: MovieFragmentCallback) :
 
     inner class MovieViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieEntity) {
+        fun bind(movie: MovieItem) {
             with(binding) {
                 tvItemTitle.text = movie.title
                 tvItemDate.text = movie.releaseDate
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailMovieActivity::class.java)
-                    intent.putExtra(Const.EXTRA_MOVIE, movie.id)
-                    intent.putExtra(Const.EXTRA_TYPE, movie.type)
-                    itemView.context.startActivity(intent)
-                }
+                itemView.setOnClickListener { callback.onDetailClick(movie) }
                 imgShare.setOnClickListener { callback.onShareClick(movie) }
-                Glide.with(itemView.context).load(movie.poster).apply(
+                Glide.with(itemView.context)
+                    .load(BuildConfig.IMAGE_URL_TMDB + POSTER_SIZE_W185 + movie.posterPath).apply(
                     RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error)
                 ).into(imgPoster)

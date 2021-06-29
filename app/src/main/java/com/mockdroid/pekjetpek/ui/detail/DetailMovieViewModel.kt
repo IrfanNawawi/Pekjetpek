@@ -1,37 +1,15 @@
 package com.mockdroid.pekjetpek.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.mockdroid.pekjetpek.data.MovieEntity
-import com.mockdroid.pekjetpek.utils.DataDummy
+import com.mockdroid.pekjetpek.data.source.MovieTvShowRepository
+import com.mockdroid.pekjetpek.data.source.remote.response.MovieItem
+import com.mockdroid.pekjetpek.data.source.remote.response.TvShowItem
 
-class DetailMovieViewModel : ViewModel() {
-    private lateinit var movieId: String
+class DetailMovieViewModel(private val movieTvShowRepository: MovieTvShowRepository) : ViewModel() {
+    fun getMovieDetail(movieId: Int): LiveData<MovieItem> =
+        movieTvShowRepository.getMovieDetail(movieId)
 
-    fun setSelectedMovie(movieId: String) {
-        this.movieId = movieId
-    }
-
-    fun getMovie(): MovieEntity {
-        lateinit var movie: MovieEntity
-        val movieEntities = DataDummy.generateDummyMovies()
-        for (movieEntity in movieEntities) {
-            if (movieEntity.id == movieId) {
-                movie = movieEntity
-            }
-        }
-
-        return movie
-    }
-
-    fun getTvShow(): MovieEntity {
-        lateinit var tvShow: MovieEntity
-        val tvShowEntities = DataDummy.generateDummyTvShow()
-        for (tvShowEntity in tvShowEntities) {
-            if (tvShowEntity.id == movieId) {
-                tvShow = tvShowEntity
-            }
-        }
-
-        return tvShow
-    }
+    fun getTvShowDetail(tvShowId: Int): LiveData<TvShowItem> =
+        movieTvShowRepository.getTvShowDetail(tvShowId)
 }
