@@ -2,24 +2,30 @@ package com.mockdroid.pekjetpek.ui.tvshow
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mockdroid.pekjetpek.BuildConfig
 import com.mockdroid.pekjetpek.R
-import com.mockdroid.pekjetpek.data.source.remote.response.TvShowItem
+import com.mockdroid.pekjetpek.data.source.local.entity.TvShowEntity
 import com.mockdroid.pekjetpek.databinding.ItemsMovieBinding
 import com.mockdroid.pekjetpek.utils.Const
 
 class TvShowAdapter(private val callback: TvShowFragmentCallback) :
-    RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
-    private var listTvShow = ArrayList<TvShowItem>()
+    PagedListAdapter<TvShowEntity, TvShowAdapter.TvShowViewHolder>(DIFF_CALLBACK) {
 
-    fun setTvShow(tvShow: List<TvShowItem>?) {
-        if (tvShow == null) return
-        this.listTvShow.clear()
-        this.listTvShow.addAll(tvShow)
-        notifyDataSetChanged()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowEntity>() {
+            override fun areItemsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem.tvShowId == newItem.tvShowId
+            }
+
+            override fun areContentsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
     override fun onCreateViewHolder(
@@ -32,15 +38,15 @@ class TvShowAdapter(private val callback: TvShowFragmentCallback) :
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
-        val tvShow = listTvShow[position]
-        holder.bind(tvShow)
+        val tvShow = getItem(position)
+        if (tvShow != null) {
+            holder.bind(tvShow)
+        }
     }
-
-    override fun getItemCount(): Int = listTvShow.size
 
     inner class TvShowViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: TvShowItem) {
+        fun bind(tvShow: TvShowEntity) {
             with(binding) {
                 tvItemTitle.text = tvShow.name
                 tvItemDate.text = tvShow.firstAirDate

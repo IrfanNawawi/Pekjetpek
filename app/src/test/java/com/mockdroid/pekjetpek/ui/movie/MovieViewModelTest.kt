@@ -3,9 +3,10 @@ package com.mockdroid.pekjetpek.ui.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.mockdroid.pekjetpek.data.source.MovieTvShowRepository
-import com.mockdroid.pekjetpek.data.source.remote.response.MovieItem
-import com.mockdroid.pekjetpek.utils.DataDummy
+import androidx.paging.PagedList
+import com.mockdroid.pekjetpek.data.MovieTvShowRepository
+import com.mockdroid.pekjetpek.data.source.local.entity.MovieEntity
+import com.mockdroid.pekjetpek.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -29,7 +30,10 @@ class MovieViewModelTest {
     private lateinit var movieTvShowRepository: MovieTvShowRepository
 
     @Mock
-    private lateinit var observer: Observer<List<MovieItem>>
+    private lateinit var observer: Observer<Resource<PagedList<MovieEntity>>>
+
+    @Mock
+    private lateinit var moviePagedList: PagedList<MovieEntity>
 
     @Before
     fun setup() {
@@ -38,17 +42,17 @@ class MovieViewModelTest {
 
     @Test
     fun getMovie() {
-        val dummyMovies = DataDummy.generateDummyMovies()
-        val movies = MutableLiveData<List<MovieItem>>()
+        val dummyMovies = Resource.success(moviePagedList)
+        val movies = MutableLiveData<Resource<PagedList<MovieEntity>>>()
         movies.value = dummyMovies
 
-        `when`(movieTvShowRepository.getAllMovies()).thenReturn(movies)
-        val movieEntities = viewModel.getMovie().value
-        verify(movieTvShowRepository).getAllMovies()
+        `when`(movieTvShowRepository.getAllMovies("BEST")).thenReturn(movies)
+        val movieEntities = viewModel.getMovie("BEST").value?.data
+        verify(movieTvShowRepository).getAllMovies("BEST")
         assertNotNull(movieEntities)
-        assertEquals(10, movieEntities?.size)
+        assertEquals(0, movieEntities?.size)
 
-        viewModel.getMovie().observeForever(observer)
+        viewModel.getMovie("BEST").observeForever(observer)
         verify(observer).onChanged(dummyMovies)
     }
 }

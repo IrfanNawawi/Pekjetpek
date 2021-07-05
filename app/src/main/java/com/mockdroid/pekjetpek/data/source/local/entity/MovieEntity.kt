@@ -1,16 +1,12 @@
 package com.mockdroid.pekjetpek.data.source.local.entity
 
-import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "moviejet")
-@Parcelize
 data class MovieEntity(
-
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int? = null,
@@ -31,7 +27,10 @@ data class MovieEntity(
     @ColumnInfo(name = "moviePoster")
     var posterPath: String? = null,
 
+    @ColumnInfo(name = "voteAverage")
+    var voteAverage: Double? = null,
+
     @NonNull
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean = false
-) : Parcelable
+)

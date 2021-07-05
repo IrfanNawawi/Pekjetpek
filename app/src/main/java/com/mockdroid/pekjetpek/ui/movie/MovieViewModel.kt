@@ -2,9 +2,12 @@ package com.mockdroid.pekjetpek.ui.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.mockdroid.pekjetpek.data.source.MovieTvShowRepository
-import com.mockdroid.pekjetpek.data.source.remote.response.MovieItem
+import androidx.paging.PagedList
+import com.mockdroid.pekjetpek.data.MovieTvShowRepository
+import com.mockdroid.pekjetpek.data.source.local.entity.MovieEntity
+import com.mockdroid.pekjetpek.vo.Resource
 
 class MovieViewModel(private val movieTvShowRepository: MovieTvShowRepository) : ViewModel() {
-    fun getMovie(): LiveData<List<MovieItem>> = movieTvShowRepository.getAllMovies()
+    fun getMovie(sort: String): LiveData<Resource<PagedList<MovieEntity>>> =
+        movieTvShowRepository.getAllMovies(sort)
 }

@@ -2,6 +2,9 @@
     <string name="app_name">TMDB Pekjetpek</string>
     <string name="movie">Movie</string>
     <string name="tvshow">Tv Show</string>
+    <string name="favorite">Favorite</string>
+    <string name="movie_fav">Movie Fav</string>
+    <string name="tv_show_fav">Tv Show Fav</string>
     <string name="title_activity_detail_movie">Detail Movie</string>
 
     <string name="movie_name">Wonder Woman</string>
@@ -9,6 +12,11 @@
     <string name="movie_overview">overview</string>
     <string name="movie_description">Set in the present, the series offers a bold, subversive take on Archie, Betty, Veronica and their friends, exploring the surreality of small-town life, the darkness and weirdness bubbling beneath Riverdales wholesome facade."</string>
     <string name="action_play">Play</string>
+    <string name="message_undo">Batalkan menghapus item sebelumnya?</string>
+    <string name="message_ok">OK</string>
     <string name="share_text">Segera mainkan film %s di TMDB.com</string>
-    <string name="imageposter">ImagePoster</string>
+
+    <string name="sort_best">Best</string>
+    <string name="sort_worst">Worst</string>
+    <string name="sort_random">Random</string>
 </resources>

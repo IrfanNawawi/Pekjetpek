@@ -1,30 +1,23 @@
 package com.mockdroid.pekjetpek.ui.home
 
-import android.content.Context
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import com.mockdroid.pekjetpek.R
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.mockdroid.pekjetpek.ui.favorite.FavoriteFragment
 import com.mockdroid.pekjetpek.ui.movie.MovieFragment
 import com.mockdroid.pekjetpek.ui.tvshow.TvShowFragment
+import com.mockdroid.pekjetpek.utils.Const.Companion.TAB_TITLES
 
-class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
-    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    companion object {
-        @StringRes
-        private val TAB_TITLES = intArrayOf(R.string.movie, R.string.tvshow)
-    }
+class SectionsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle) :
+    FragmentStateAdapter(fm, lifecycle) {
 
-    override fun getCount(): Int = TAB_TITLES.size
+    override fun getItemCount(): Int = TAB_TITLES.size
 
-    override fun getItem(position: Int): Fragment = when (position) {
+    override fun createFragment(position: Int): Fragment = when (position) {
         0 -> MovieFragment()
         1 -> TvShowFragment()
+        2 -> FavoriteFragment()
         else -> Fragment()
     }
-
-    override fun getPageTitle(position: Int): CharSequence = mContext.resources.getString(
-        TAB_TITLES[position]
-    )
 }

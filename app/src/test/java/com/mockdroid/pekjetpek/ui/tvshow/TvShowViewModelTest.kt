@@ -3,9 +3,10 @@ package com.mockdroid.pekjetpek.ui.tvshow
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.mockdroid.pekjetpek.data.source.MovieTvShowRepository
-import com.mockdroid.pekjetpek.data.source.remote.response.TvShowItem
-import com.mockdroid.pekjetpek.utils.DataDummy
+import androidx.paging.PagedList
+import com.mockdroid.pekjetpek.data.MovieTvShowRepository
+import com.mockdroid.pekjetpek.data.source.local.entity.TvShowEntity
+import com.mockdroid.pekjetpek.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -28,7 +29,10 @@ class TvShowViewModelTest {
     private lateinit var movieTvShowRepository: MovieTvShowRepository
 
     @Mock
-    private lateinit var observer: Observer<List<TvShowItem>>
+    private lateinit var observer: Observer<Resource<PagedList<TvShowEntity>>>
+
+    @Mock
+    private lateinit var tvShowPagedList: PagedList<TvShowEntity>
 
     @Before
     fun setup() {
@@ -37,16 +41,16 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShow() {
-        val dummyTvShows = DataDummy.generateDummyTvShow()
-        val tvShows = MutableLiveData<List<TvShowItem>>()
+        val dummyTvShows = Resource.success(tvShowPagedList)
+        val tvShows = MutableLiveData<Resource<PagedList<TvShowEntity>>>()
         tvShows.value = dummyTvShows
 
-        Mockito.`when`(movieTvShowRepository.getAllTvShows()).thenReturn(tvShows)
-        val tvShowEntities = viewModel.getTvShow().value
+        Mockito.`when`(movieTvShowRepository.getAllTvShows("BEST")).thenReturn(tvShows)
+        val tvShowEntities = viewModel.getTvShow("BEST").value?.data
         assertNotNull(tvShowEntities)
-        assertEquals(10, tvShowEntities?.size)
+        assertEquals(0, tvShowEntities?.size)
 
-        viewModel.getTvShow().observeForever(observer)
+        viewModel.getTvShow("BEST").observeForever(observer)
         Mockito.verify(observer).onChanged(dummyTvShows)
     }
 }

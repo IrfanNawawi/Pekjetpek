@@ -20,7 +20,7 @@ abstract class MovieTvShowDatabase : RoomDatabase() {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     MovieTvShowDatabase::class.java,
-                    "movietvshowjet.db"
+                    "tmdbjet.db"
                 ).build().apply {
                     INSTANCE = this
                 }
