@@ -23,6 +23,7 @@ import com.mockdroid.pekjetpek.viewmodel.ViewModelFactory
 import com.mockdroid.pekjetpek.vo.Resource
 import com.mockdroid.pekjetpek.vo.Status
 
+
 class MovieFragment : Fragment(), MovieFragmentCallback {
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding

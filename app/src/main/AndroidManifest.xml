@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mockdroid.pekjetpek">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +20,11 @@
             android:theme="@style/Theme.Academy.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mockdroid.pekjetpek.ui.home.HomeActivity"/>
+                android:value="com.mockdroid.pekjetpek.ui.home.HomeActivity" />
         </activity>
-        <activity android:name="com.mockdroid.pekjetpek.ui.home.HomeActivity">
+        <activity
+            android:name="com.mockdroid.pekjetpek.ui.home.HomeActivity"
+            android:theme="@style/Theme.Academy.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

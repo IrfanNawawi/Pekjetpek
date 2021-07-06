@@ -4,7 +4,9 @@
     <color name="purple_700">#27255E</color>
     <color name="teal_200">#FFCE00</color>
     <color name="teal_700">#FF018786</color>
+    <color name="toolbar">#202123</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#FFD130</color>
     <color name="placeholder">#6FB6B6B6</color>
 </resources>
